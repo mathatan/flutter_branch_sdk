@@ -19,7 +19,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  js: ^0.6.2
+  js: ^0.6.3
 
 dev_dependencies:
   flutter_test:

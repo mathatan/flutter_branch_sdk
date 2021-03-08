@@ -26,10 +26,6 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Identifies the current user to the Branch API by supplying a unique identifier as a userId value
   static void setIdentity(String userId) {
-    if (userId == null) {
-      throw ArgumentError('userId is required');
-    }
-
     BranchJS.setIdentity(userId, allowInterop((error, data) {
       if (error == null) {
         _userIdentified = true;
@@ -142,14 +138,13 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
     }
 
     Map<String, dynamic> linkData = {
-      if (buo.canonicalIdentifier != null || buo.canonicalUrl != null)
-        "\$canonical_identifier": buo.canonicalIdentifier ?? buo.canonicalUrl,
-      if (buo.publiclyIndex != null) "\$publicly_indexable": buo.publiclyIndex,
-      if (buo.locallyIndex != null) "\$locally_indexable": buo.locallyIndex,
-      if (buo.title != null) "\$og_title": buo.title,
-      if (buo.contentDescription != null)
+      "\$canonical_identifier": buo.canonicalIdentifier,
+      "\$publicly_indexable": buo.publiclyIndex,
+      "\$locally_indexable": buo.locallyIndex,
+      if (buo.title.isNotEmpty) "\$og_title": buo.title,
+      if (buo.contentDescription.isNotEmpty)
         "\$og_description": buo.contentDescription,
-      if (buo.imageUrl != null) "\$og_image_url": buo.imageUrl,
+      if (buo.imageUrl.isNotEmpty) "\$og_image_url": buo.imageUrl,
       if (contentMetadata.keys.length > 0) ...contentMetadata
     };
 
@@ -184,7 +179,7 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
       try {
         await promiseToFuture(navigatorShare(_dartObjectToJsObject({
           "title": messageText,
-          if (buo.title != null) "text": buo.title,
+          if (buo.title.isNotEmpty) "text": buo.title,
           "url": response.result
         })));
       } catch (e) {

@@ -2,7 +2,6 @@
 library branchjs;
 
 import 'dart:js';
-import 'dart:js_util';
 
 import 'package:js/js.dart';
 
