@@ -4,7 +4,6 @@ library branchjs;
 import 'dart:js';
 import 'dart:js_util';
 
-import 'package:flutter/foundation.dart';
 import 'package:js/js.dart';
 
 @JS('JSON.stringify')
@@ -421,7 +420,7 @@ class BranchJS {
   /// Note: Branch.init must be called prior to calling any other Branch functions.
   @JS('init')
   external static void init(String branchKey,
-      [Object options, Function callback]);
+      [Object? options, Function? callback]);
 
   /// link(data, callback)
   /// Parameters
@@ -558,7 +557,7 @@ class BranchJS {
   ///
   /// callback("Error message");
   @JS('redeem')
-  external static void redeem(int amount, String bucket, [Function callback]);
+  external static void redeem(int amount, String? bucket, [Function? callback]);
 
   // No documentation on reference
   // @JS('referrals')

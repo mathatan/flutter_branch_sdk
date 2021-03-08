@@ -8,12 +8,12 @@ Map<String, String> _metaData = {};
 
 class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   /// Constructs a singleton instance of [FlutterBranchSdk].
-  static FlutterBranchSdkWeb _singleton;
+  static FlutterBranchSdkWeb? _singleton;
   factory FlutterBranchSdkWeb() {
     if (_singleton == null) {
       _singleton = FlutterBranchSdkWeb._();
     }
-    return _singleton;
+    return _singleton!;
   }
 
   // ignore: close_sinks
@@ -53,7 +53,7 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Returns the last parameters associated with the link that referred the user, not really applicaple for web though
   static Future<Map<dynamic, dynamic>> getLatestReferringParams() {
-    Completer response = Completer();
+    Completer<Map<dynamic, dynamic>> response = Completer();
 
     BranchJS.data(allowInterop((err, data) {
       if (err == null) {
@@ -70,7 +70,7 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Returns the first parameters associated with the link that referred the user
   static Future<Map<dynamic, dynamic>> getFirstReferringParams() {
-    Completer response = Completer();
+    Completer<Map<dynamic, dynamic>> response = Completer();
 
     BranchJS.first(allowInterop((err, data) {
       if (err == null) {
@@ -129,10 +129,10 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Creates a short url for the BUO
   static Future<BranchResponse> getShortUrl(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties}) async {
     Map<String, dynamic> contentMetadata = {
-      if (buo.contentMetadata != null) ...buo.contentMetadata.toMap()
+      ...(buo.contentMetadata?.toMap() ?? {})
     };
 
     if (contentMetadata.containsKey('customMetadata')) {
@@ -173,9 +173,9 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Showing a Share Sheet - Implemented via navigator share if available, otherwise browser prompt.
   static Future<BranchResponse> showShareSheet(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties,
-      @required String messageText,
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties,
+      required String messageText,
       String androidMessageTitle = '',
       String androidSharingTitle = ''}) async {
     BranchResponse response =
@@ -197,9 +197,9 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
 
   ///Logs this BranchEvent to Branch for tracking and analytics
   static void trackContent(
-      {@required BranchUniversalObject buo, BranchEvent branchEvent}) {
+      {required BranchUniversalObject buo, required BranchEvent branchEvent}) {
     Map<String, dynamic> contentMetadata = {
-      if (buo.contentMetadata != null) ...buo.contentMetadata.toMap()
+      ...buo.contentMetadata?.toMap() ?? {}
     };
 
     BranchJS.logEvent(branchEvent._eventName,
@@ -208,13 +208,13 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   }
 
   ///Logs this BranchEvent to Branch for tracking and analytics
-  static void trackContentWithoutBuo({BranchEvent branchEvent}) {
+  static void trackContentWithoutBuo({required BranchEvent branchEvent}) {
     BranchJS.logEvent(
         branchEvent._eventName, _dartObjectToJsObject(branchEvent.toMap()));
   }
 
   ///Mark the content referred by this object as viewed. This increment the view count of the contents referred by this object.
-  static void registerView({@required BranchUniversalObject buo}) {
+  static void registerView({required BranchUniversalObject buo}) {
     BranchEvent branchEvent =
         BranchEvent.standardEvent(BranchStandardEvent.VIEW_ITEM);
 
@@ -225,8 +225,8 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   ///For Android: Publish this BUO with Google app indexing so that the contents will be available with google search
   ///For iOS:     List items on Spotlight
   static Future<bool> listOnSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     throw UnsupportedError('Not supported by Branch JS SDK');
   }
 
@@ -234,13 +234,13 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   ///             This will remove the content from Google(Firebase) and other supported Indexing services
   ///For iOS:     Remove Branch Universal Object from Spotlight if privately indexed
   static Future<bool> removeFromSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     throw UnsupportedError('Not supported by Branch JS SDK');
   }
 
   ///Retrieves rewards for the current user/session
-  static Future<BranchResponse> loadRewards({String bucket}) async {
+  static Future<BranchResponse> loadRewards({String? bucket}) async {
     Completer<BranchResponse> responseCompleter = Completer();
 
     BranchJS.credits(allowInterop((err, data) {
@@ -264,7 +264,7 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   ///If the number to redeem exceeds the number available in the bucket, all of the
   ///available credits will be redeemed instead.
   static Future<BranchResponse> redeemRewards(
-      {@required int count, String bucket}) async {
+      {required int count, String? bucket}) async {
     Completer<BranchResponse> responseCompleter = Completer();
 
     BranchJS.redeem(count, bucket, allowInterop((err) {
@@ -281,7 +281,7 @@ class FlutterBranchSdkWeb implements FlutterBranchSdkAbstract {
   }
 
   ///Gets the credit history
-  static Future<BranchResponse> getCreditHistory({String bucket}) async {
+  static Future<BranchResponse> getCreditHistory({String? bucket}) async {
     Completer<BranchResponse> responseCompleter = Completer();
 
     BranchJS.creditHistory(

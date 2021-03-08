@@ -53,21 +53,20 @@ class FlutterBranchSdkAbstract {
   ///handle deep links correctly when you first integrate Branch into your app.
   static void validateSDKIntegration() {
     throw UnsupportedError('Not implemented');
-    ;
   }
 
   ///Creates a short url for the BUO
   static Future<BranchResponse> getShortUrl(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties}) async {
     throw UnsupportedError('Not implemented');
   }
 
   ///Showing a Share Sheet
   static Future<BranchResponse> showShareSheet(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties,
-      @required String messageText,
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties,
+      required String messageText,
       String androidMessageTitle = '',
       String androidSharingTitle = ''}) async {
     throw UnsupportedError('Not implemented');
@@ -75,40 +74,39 @@ class FlutterBranchSdkAbstract {
 
   ///Logs this BranchEvent to Branch for tracking and analytics
   static void trackContent(
-      {@required BranchUniversalObject buo, BranchEvent branchEvent}) {
+      {required BranchUniversalObject buo, BranchEvent? branchEvent}) {
     throw UnsupportedError('Not implemented');
   }
 
   ///Logs this BranchEvent to Branch for tracking and analytics
-  static void trackContentWithoutBuo({BranchEvent branchEvent}) {
+  static void trackContentWithoutBuo({BranchEvent? branchEvent}) {
     throw UnsupportedError('Not implemented');
   }
 
   ///Mark the content referred by this object as viewed. This increment the view count of the contents referred by this object.
-  static void registerView({@required BranchUniversalObject buo}) {
+  static void registerView({required BranchUniversalObject buo}) {
     throw UnsupportedError('Not implemented');
   }
 
   ///For Android: Publish this BUO with Google app indexing so that the contents will be available with google search
   ///For iOS:     List items on Spotlight
   static Future<bool> listOnSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     throw UnsupportedError('Not implemented');
-    ;
   }
 
   ///For Android: Remove the BUO from the local indexing if it is added to the local indexing already
   ///             This will remove the content from Google(Firebase) and other supported Indexing services
   ///For iOS:     Remove Branch Universal Object from Spotlight if privately indexed
   static Future<bool> removeFromSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     throw UnsupportedError('Not implemented');
   }
 
   ///Retrieves rewards for the current user/session
-  static Future<BranchResponse> loadRewards({String bucket}) async {
+  static Future<BranchResponse> loadRewards({String? bucket}) async {
     throw UnsupportedError('Not implemented');
   }
 
@@ -116,12 +114,12 @@ class FlutterBranchSdkAbstract {
   ///If the number to redeem exceeds the number available in the bucket, all of the
   ///available credits will be redeemed instead.
   static Future<BranchResponse> redeemRewards(
-      {@required int count, String bucket}) async {
+      {required int count, String? bucket}) async {
     throw UnsupportedError('Not implemented');
   }
 
   ///Gets the credit history
-  static Future<BranchResponse> getCreditHistory({String bucket}) async {
+  static Future<BranchResponse> getCreditHistory({String? bucket}) async {
     throw UnsupportedError('Not implemented');
   }
 

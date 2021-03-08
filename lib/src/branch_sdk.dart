@@ -2,12 +2,12 @@ part of flutter_branch_sdk;
 
 class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   /// Constructs a singleton instance of [FlutterBranchSdk].
-  static FlutterBranchSdk _singleton;
+  static FlutterBranchSdk? _singleton;
   factory FlutterBranchSdk() {
     if (_singleton == null) {
       _singleton = FlutterBranchSdk._();
     }
-    return _singleton;
+    return _singleton!;
   }
 
   FlutterBranchSdk._();
@@ -69,7 +69,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
 
   ///Initialises a session with the Branch API
   ///Listen click em Branch Deeplinks
-  static Stream<Map<dynamic, dynamic>> initSession({String branchKey}) {
+  static Stream<Map<dynamic, dynamic>> initSession({String? branchKey}) {
     if (kIsWeb) {
       if (branchKey == null) {
         throw UnsupportedError(
@@ -93,8 +93,8 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
 
   ///Creates a short url for the BUO
   static Future<BranchResponse> getShortUrl(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.getShortUrl(
           buo: buo, linkProperties: linkProperties);
@@ -106,9 +106,9 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
 
   ///Showing a Share Sheet
   static Future<BranchResponse> showShareSheet(
-      {@required BranchUniversalObject buo,
-      @required BranchLinkProperties linkProperties,
-      @required String messageText,
+      {required BranchUniversalObject buo,
+      required BranchLinkProperties linkProperties,
+      required String messageText,
       String androidMessageTitle = '',
       String androidSharingTitle = ''}) async {
     if (kIsWeb) {
@@ -130,7 +130,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
 
   ///Logs this BranchEvent to Branch for tracking and analytics
   static void trackContent(
-      {@required BranchUniversalObject buo, BranchEvent branchEvent}) {
+      {required BranchUniversalObject buo, required BranchEvent branchEvent}) {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.trackContent(
           buo: buo, branchEvent: branchEvent);
@@ -141,7 +141,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   }
 
   ///Logs this BranchEvent to Branch for tracking and analytics
-  static void trackContentWithoutBuo({BranchEvent branchEvent}) {
+  static void trackContentWithoutBuo({required BranchEvent branchEvent}) {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.trackContentWithoutBuo(
           branchEvent: branchEvent);
@@ -152,7 +152,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   }
 
   ///Mark the content referred by this object as viewed. This increment the view count of the contents referred by this object.
-  static void registerView({@required BranchUniversalObject buo}) {
+  static void registerView({required BranchUniversalObject buo}) {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.registerView(buo: buo);
     } else {
@@ -163,8 +163,8 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   ///For Android: Publish this BUO with Google app indexing so that the contents will be available with google search
   ///For iOS:     List items on Spotlight
   static Future<bool> listOnSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.listOnSearch(
           buo: buo, linkProperties: linkProperties);
@@ -178,8 +178,8 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   ///             This will remove the content from Google(Firebase) and other supported Indexing services
   ///For iOS:     Remove Branch Universal Object from Spotlight if privately indexed
   static Future<bool> removeFromSearch(
-      {@required BranchUniversalObject buo,
-      BranchLinkProperties linkProperties}) async {
+      {required BranchUniversalObject buo,
+      BranchLinkProperties? linkProperties}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.removeFromSearch(
           buo: buo, linkProperties: linkProperties);
@@ -190,7 +190,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   }
 
   ///Retrieves rewards for the current user/session
-  static Future<BranchResponse> loadRewards({String bucket}) async {
+  static Future<BranchResponse> loadRewards({String? bucket}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.loadRewards(bucket: bucket);
     } else {
@@ -202,7 +202,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   ///If the number to redeem exceeds the number available in the bucket, all of the
   ///available credits will be redeemed instead.
   static Future<BranchResponse> redeemRewards(
-      {@required int count, String bucket}) async {
+      {required int count, String? bucket}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.redeemRewards(count: count, bucket: bucket);
     } else {
@@ -211,7 +211,7 @@ class FlutterBranchSdk implements FlutterBranchSdkAbstract {
   }
 
   ///Gets the credit history
-  static Future<BranchResponse> getCreditHistory({String bucket}) async {
+  static Future<BranchResponse> getCreditHistory({String? bucket}) async {
     if (kIsWeb) {
       return FlutterBranchSdkWeb.getCreditHistory(bucket: bucket);
     } else {
